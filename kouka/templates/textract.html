@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+{% block css %}
+<style>
+  .bd-placeholder-img {
+    font-size: 1.125rem;
+    text-anchor: middle;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    user-select: none;
+  }
+
+  @media (min-width: 768px) {
+    .bd-placeholder-img-lg {
+      font-size: 3.5rem;
+    }
+  }
+</style>
+{% endblock %}
+
+{% block header %}
+<div class="container">
+  <header class="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom ">
+    <a class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-dark text-decoration-none">
+      <svg class="bi me-2" width="40" height="32"><use xlink:href="#bootstrap"/></svg>
+      <span class="fs-4">画像音声合成</span>
+    </a>
+    <ul class="nav nav-pills">
+      <li class="nav-item"><a href="recognize_celebrities" class="nav-link" aria-current="page">有名人検索</a></li>
+      <li class="nav-item"><a href="textract" class="nav-link">画像音声合成</a></li>
+    </ul>
+  </header>
+</div>
+{% endblock %}
+<!-- 画像ファイルアップロード -->
+{% block content %}
+<div class="container-fluid ms-5">
+  <form action="http://127.0.0.1:5000/textract" method="POST" enctype="multipart/form-data">
+    <div class="mb-3 w-50 p-3">
+      <p>※ここにfileをアップロードしてください</p>
+      <!-- 画像ファイルが正しくなかった時にエラーを出力 -->
+      <p>{{erro}}</p>
+      <input class="form-control" type="file" name="image_file" id="formFile">
+      <button type="submit" class="btn btn-outline-secondary mt-2" >アップロード</button>
+    </div>
+  </form>
+    <div  class="w-50 p-3">
+        <h2 class="fs-3">テキスト</h2>
+        {% if text %}
+          <p>{{text}}</p>
+        {% else %}
+          <p>※fileをアップロードするとここにテキストが表示されます</p>
+        {% endif %}
+    </div>
+    <div class="w-50 p-3">
+        <h2 class="fs-3">音声合成</h2>
+        <audio src="{{file_vc}}" controls></audio>
+    </div>
+</div>
+{% endblock %}
